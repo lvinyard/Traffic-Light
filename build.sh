@@ -12,3 +12,6 @@ mcs -r:System -r:System.Windows.Forms -r:System.Drawing  -r:ui.dll -out:Assign1.
 
 ./Assign1.exe
 
+echo Remove old binary files
+rm *.dll
+rm *.exe
