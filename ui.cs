@@ -3,13 +3,50 @@ using System.Drawing;
 using System.Windows.Forms;
 public class Program: Form {
 	
-	private Font arial = new Font("Arial", 24, FontStyle.Bold);
-	
-	
+	//Creating tools
+	private Font arial = new Font("Arial", 18, FontStyle.Bold);
+	private Pen blackPen = new Pen(Color.Black);
+
+//
+//Contructor
+//
 	public Program(){
-	Size = new Size(1000,1000);
-	Text = "Assignment 1 - By Lucas Vinyard";
-	BackColor=Color.Black;
+
+	//Setting Window Properties
+
+	Size = new Size(450,800);  
+
+	Text = "Assignment 2 - By Lucas Vinyard";
+	BackColor=Color.Gray;
+
+	//Creating Label for Top of Program
+	 Label nameLabel = new Label();
+		nameLabel.Text = "Traffic Light by Lucas Vinyard";
+		nameLabel.BackColor = Color.White;
+        nameLabel.AutoSize = false;
+    	nameLabel.TextAlign = ContentAlignment.MiddleCenter;
+        nameLabel.Font = arial;
+		nameLabel.Height = 60;
+		nameLabel.Width = 400;
+		Controls.Add(nameLabel);
+
+
 	}//End of Program
 	
+//On Paint
+	protected override void OnPaint(PaintEventArgs e) {
+		
+		Graphics g = e.Graphics;
+		
+		//Draw Pen (Line across bottom screen)
+		blackPen.Width = 5;
+		g.DrawLine(blackPen,0,60,450,60);
+		
+		//Draw Rectangle (Black box on bottom screen)
+		g.FillRectangle(Brushes.White,0,0,450,60);
+			
+		base.OnPaint(e);
+	}// End of OnPaint
+
+
 }// End of Class
