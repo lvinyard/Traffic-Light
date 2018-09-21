@@ -4,7 +4,7 @@ using System.Windows.Forms;
 public class Program: Form {
 	
 	//Creating tools
-	private Font arial = new Font("Arial", 18, FontStyle.Bold);
+	private Font arial = new Font("Arial", 15, FontStyle.Bold);
 	private Pen blackPen = new Pen(Color.Black);
 
 //
@@ -14,7 +14,7 @@ public class Program: Form {
 
 	//Setting Window Properties
 
-	Size = new Size(450,800);  
+	Size = new Size(450,900);  
 
 	Text = "Assignment 2 - By Lucas Vinyard";
 	BackColor=Color.Gray;
@@ -26,7 +26,7 @@ public class Program: Form {
         nameLabel.AutoSize = false;
     	nameLabel.TextAlign = ContentAlignment.MiddleCenter;
         nameLabel.Font = arial;
-		nameLabel.Height = 60;
+		nameLabel.Height = 40;
 		nameLabel.Width = 400;
 		Controls.Add(nameLabel);
 
@@ -40,10 +40,12 @@ public class Program: Form {
 		
 		//Draw Pen (Line across bottom screen)
 		blackPen.Width = 5;
-		g.DrawLine(blackPen,0,60,450,60);
+		g.DrawLine(blackPen,0,749,450,749);
+		g.DrawLine(blackPen,0,40,450,40);
 		
-		//Draw Rectangle (Black box on bottom screen)
-		g.FillRectangle(Brushes.White,0,0,450,60);
+		//Draw Rectangle (Black box on bottom and top screen)
+		g.FillRectangle(Brushes.White,0,750,450,910);
+		g.FillRectangle(Brushes.White,0,0,450,40);
 			
 		base.OnPaint(e);
 	}// End of OnPaint
