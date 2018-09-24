@@ -9,9 +9,51 @@ public class Program : Form
 	//Creating tools
     private Font arial = new Font("Arial", 15, FontStyle.Bold);
     private Pen blackPen = new Pen(Color.Black);
+    public int counter = 0;
+	public SolidBrush grayBrush = new SolidBrush(Color.Gray);
+	SolidBrush greenBrush = new SolidBrush(Color.Green);
+	SolidBrush yellowBrush = new SolidBrush(Color.Yellow);
+	public SolidBrush redBrush = new SolidBrush(Color.Red);
+	SolidBrush test = grayBrush;
+    //
+    //Contructor
+    //
+    public Program()
+    {
+
+        //Setting Window Properties
+        Size = new Size(450, 900);
+        Text = "Assignment 2 - By Lucas Vinyard";
+        BackColor = Color.DarkGreen;
+		FormBorderStyle = FormBorderStyle.FixedSingle;
+		
+        //Call Label for Top of Program
+		initLabel();
+        
+        //Call Controls
+        controls();
+        
+        //Call Clock
+        initClock();
+		
+
+    }//End of Contructor
     
-    
-    //Creating Controls
+    //Creating Label
+    protected void initLabel()
+    {
+		Label nameLabel = new Label();
+        nameLabel.Text = "Traffic Light by Lucas Vinyard";
+        nameLabel.BackColor = Color.White;
+        nameLabel.AutoSize = false;
+        nameLabel.TextAlign = ContentAlignment.MiddleCenter;
+        nameLabel.Font = arial;
+        nameLabel.Height = 40;
+        nameLabel.Width = 400;
+        Controls.Add(nameLabel);
+	}
+	
+	    //Creating Controls
     protected void controls()
     {
 		//Start Button
@@ -68,45 +110,6 @@ public class Program : Form
 		exitButton.Text = "Exit";
 		Controls.Add(exitButton);
 	}
-
-    //
-    //Contructor
-    //
-    public Program()
-    {
-
-        //Setting Window Properties
-        Size = new Size(450, 900);
-        Text = "Assignment 2 - By Lucas Vinyard";
-        BackColor = Color.DarkGreen;
-		FormBorderStyle = FormBorderStyle.FixedSingle;
-		
-        //Call Label for Top of Program
-		initLabel();
-        
-        //Call Controls
-        controls();
-        
-        //Call Clock
-        initClock();
-		
-
-    }//End of Program
-    
-    //Creating Label
-    protected void initLabel()
-    {
-		Label nameLabel = new Label();
-        nameLabel.Text = "Traffic Light by Lucas Vinyard";
-        nameLabel.BackColor = Color.White;
-        nameLabel.AutoSize = false;
-        nameLabel.TextAlign = ContentAlignment.MiddleCenter;
-        nameLabel.Font = arial;
-        nameLabel.Height = 40;
-        nameLabel.Width = 400;
-        Controls.Add(nameLabel);
-	}
-	
     
     
     //Creating Clock
@@ -119,6 +122,12 @@ public class Program : Form
 	//Seiko function
 	protected void seiko_function(System.Object s, ElapsedEventArgs e)
 	{
+		if(counter < 4)
+		{test = redBrush;
+		}
+		
+		counter++;
+		Invalidate();
 	}
 
 
@@ -138,12 +147,12 @@ public class Program : Form
         g.FillRectangle(Brushes.White, 0, 0, 450, 40);
         
 		//Drawing Circles
-		SolidBrush grayBrush = new SolidBrush(Color.Gray);
+
 		
 		RectangleF rect1 = new RectangleF(125,65,200,200);
 		RectangleF rect2 = new RectangleF(125,295,200,200);
 		RectangleF rect3 = new RectangleF(125,525,200,200);
-		g.FillEllipse(grayBrush,rect1);
+		g.FillEllipse(test,rect1);
 		g.FillEllipse(grayBrush,rect2);
 		g.FillEllipse(grayBrush,rect3);
 		
