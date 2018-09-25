@@ -6,68 +6,13 @@ using System.Windows.Forms;
 using System.Timers;
 public class Program : Form
 {
-	//Creating tools
+    //Creating tools
     private Font arial = new Font("Arial", 15, FontStyle.Bold);
     private Pen blackPen = new Pen(Color.Black);
-    
-    
-    //Creating Controls
-    protected void controls()
-    {
-		//Start Button
-		Button startButton = new Button();
-		startButton.Location = new Point(20,780);
-		startButton.Font = new Font("Arial", 10, FontStyle.Bold);
-		startButton.ForeColor = Color.Black;
-		startButton.BackColor = Color.Green;
-		startButton.Text = "Start";
-		Controls.Add(startButton);
-		
-		//GroupBox Rate of Change
-		GroupBox roc = new GroupBox();
-		roc.ForeColor = Color.Black;
-		roc.BackColor = Color.White;
-		roc.Text = "Rate of Change";
-		roc.Location = new Point(130,770);
-		
-		//Making slow RadioButton
-		RadioButton slow = new RadioButton();
-		slow.Location = new Point(25,20);
-		slow.Text = "Slow";
-		roc.Controls.Add(slow);
+    public int counter = -1;
 
-		//Making medium RadioButton
-		RadioButton medium = new RadioButton();
-		medium.Location = new Point(25,45);
-		medium.Text = "Medium";
-		roc.Controls.Add(medium);
-
-		//Making fast RadioButton
-		RadioButton fast = new RadioButton();
-		fast.Location = new Point(25,70);
-		fast.Text = "Fast";
-		roc.Controls.Add(fast);		
-				
-		Controls.Add(roc);
-		
-		//Stop Button
-		Button stopButton = new Button();
-		stopButton.Location = new Point(20,820);
-		stopButton.Font = new Font("Arial", 10, FontStyle.Bold);
-		stopButton.ForeColor = Color.Black;
-		stopButton.BackColor = Color.Yellow;
-		stopButton.Text = "Stop";
-		Controls.Add(stopButton);
-		
-		//Exit Button
-		Button exitButton = new Button();
-		exitButton.Location = new Point(350,800);
-		exitButton.Font = new Font("Arial", 10, FontStyle.Bold);
-		exitButton.ForeColor = Color.Black;
-		exitButton.BackColor = Color.Red;
-		exitButton.Text = "Exit";
-		Controls.Add(exitButton);
-	}
+    //INitizlizes Clock
+    private static System.Timers.Timer seiko = new System.Timers.Timer(1000);
 
     //
     //Contructor
@@ -79,24 +24,22 @@ public class Program : Form
         Size = new Size(450, 900);
         Text = "Assignment 2 - By Lucas Vinyard";
         BackColor = Color.DarkGreen;
-		FormBorderStyle = FormBorderStyle.FixedSingle;
-		
+        FormBorderStyle = FormBorderStyle.FixedSingle;
+
         //Call Label for Top of Program
-		initLabel();
-        
+        initLabel();
+
         //Call Controls
         controls();
-        
-        //Call Clock
-        initClock();
-		
 
-    }//End of Program
-    
+
+
+    }//End of Contructor
+
     //Creating Label
     protected void initLabel()
     {
-		Label nameLabel = new Label();
+        Label nameLabel = new Label();
         nameLabel.Text = "Traffic Light by Lucas Vinyard";
         nameLabel.BackColor = Color.White;
         nameLabel.AutoSize = false;
@@ -105,21 +48,94 @@ public class Program : Form
         nameLabel.Height = 40;
         nameLabel.Width = 400;
         Controls.Add(nameLabel);
-	}
-	
-    
-    
-    //Creating Clock
-	protected void initClock()
-	{
-	 System.Timers.Timer seiko = new System.Timers.Timer();
-	seiko.Elapsed += new ElapsedEventHandler(seiko_function);
-	}
+    }
 
-	//Seiko function
-	protected void seiko_function(System.Object s, ElapsedEventArgs e)
-	{
-	}
+    //Creating Controls
+    protected void controls()
+    {
+        //Start Button
+        Button startButton = new Button();
+        startButton.Location = new Point(20, 780);
+        startButton.Font = new Font("Arial", 10, FontStyle.Bold);
+        startButton.ForeColor = Color.Black;
+        startButton.BackColor = Color.Green;
+        startButton.Text = "Start";
+        Controls.Add(startButton);
+        startButton.Click += new EventHandler(startFunction);
+
+        //GroupBox Rate of Change
+        GroupBox roc = new GroupBox();
+        roc.ForeColor = Color.Black;
+        roc.BackColor = Color.White;
+        roc.Text = "Rate of Change";
+        roc.Location = new Point(130, 770);
+
+        //Making slow RadioButton
+        RadioButton slow = new RadioButton();
+        slow.Location = new Point(25, 20);
+        slow.Text = "Slow";
+        roc.Controls.Add(slow);
+
+        //Making medium RadioButton
+        RadioButton medium = new RadioButton();
+        medium.Location = new Point(25, 45);
+        medium.Text = "Medium";
+        roc.Controls.Add(medium);
+
+        //Making fast RadioButton
+        RadioButton fast = new RadioButton();
+        fast.Location = new Point(25, 70);
+        fast.Text = "Fast";
+        roc.Controls.Add(fast);
+
+        Controls.Add(roc);
+
+        //Stop Button
+        Button stopButton = new Button();
+        stopButton.Location = new Point(20, 820);
+        stopButton.Font = new Font("Arial", 10, FontStyle.Bold);
+        stopButton.ForeColor = Color.Black;
+        stopButton.BackColor = Color.Yellow;
+        stopButton.Text = "Stop";
+        Controls.Add(stopButton);
+        stopButton.Click += new EventHandler(stopFunction);
+
+        //Exit Button
+        Button exitButton = new Button();
+        exitButton.Location = new Point(350, 800);
+        exitButton.Font = new Font("Arial", 10, FontStyle.Bold);
+        exitButton.ForeColor = Color.Black;
+        exitButton.BackColor = Color.Red;
+        exitButton.Text = "Exit";
+        Controls.Add(exitButton);
+        exitButton.Click += new EventHandler(exitFunction);
+    }
+
+
+
+
+    //Seiko function
+    protected void seiko_function(System.Object s, ElapsedEventArgs e)
+    {
+        counter++;
+        Invalidate();
+    }
+
+    protected void startFunction(object x, EventArgs e)
+    {
+        seiko.Start();
+        seiko.Elapsed += new ElapsedEventHandler(seiko_function);
+    }
+    protected void stopFunction(object x, EventArgs e)
+    {
+        seiko.Stop();
+    }
+
+    protected void exitFunction(object x, EventArgs e)
+    {
+        seiko.Dispose();
+        Application.Exit();
+    }
 
 
     //On Paint
@@ -136,17 +152,18 @@ public class Program : Form
         //Draw Rectangle (Black box on bottom and top screen)
         g.FillRectangle(Brushes.White, 0, 750, 450, 910);
         g.FillRectangle(Brushes.White, 0, 0, 450, 40);
-        
-		//Drawing Circles
-		SolidBrush grayBrush = new SolidBrush(Color.Gray);
-		
-		RectangleF rect1 = new RectangleF(125,65,200,200);
-		RectangleF rect2 = new RectangleF(125,295,200,200);
-		RectangleF rect3 = new RectangleF(125,525,200,200);
-		g.FillEllipse(grayBrush,rect1);
-		g.FillEllipse(grayBrush,rect2);
-		g.FillEllipse(grayBrush,rect3);
-		
+
+        //Drawing Circles
+
+
+        RectangleF rect1 = new RectangleF(125, 65, 200, 200);
+        RectangleF rect2 = new RectangleF(125, 295, 200, 200);
+        RectangleF rect3 = new RectangleF(125, 525, 200, 200);
+        g.FillEllipse(clockLogic.topcolor(counter), rect1);
+        g.FillEllipse(clockLogic.midcolor(counter), rect2);
+        g.FillEllipse(clockLogic.botcolor(counter), rect3);
+
+
         base.OnPaint(e);
     }// End of OnPaint
 
