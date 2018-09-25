@@ -116,16 +116,14 @@ public class Program : Form
 	protected void initClock()
 	{
 	 System.Timers.Timer seiko = new System.Timers.Timer();
+	 seiko.Interval = 1000 ms;
+	 seiko.Start();
 	seiko.Elapsed += new ElapsedEventHandler(seiko_function);
 	}
 
 	//Seiko function
 	protected void seiko_function(System.Object s, ElapsedEventArgs e)
 	{
-		if(counter < 4)
-		{test = redBrush;
-		}
-		
 		counter++;
 		Invalidate();
 	}
