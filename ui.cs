@@ -11,8 +11,10 @@ public class Program : Form
     private Pen blackPen = new Pen(Color.Black);
     public int counter = -1;
 
-    //INitizlizes Clock
-    private static System.Timers.Timer seiko = new System.Timers.Timer(1000);
+    public static int pace = 1000;
+
+    //Initizlizes Clock
+    private static System.Timers.Timer seiko = new System.Timers.Timer(pace);
 
     //
     //Contructor
@@ -75,18 +77,21 @@ public class Program : Form
         slow.Location = new Point(25, 20);
         slow.Text = "Slow";
         roc.Controls.Add(slow);
+        slow.Click += new EventHandler(slowfunction);
 
         //Making medium RadioButton
         RadioButton medium = new RadioButton();
         medium.Location = new Point(25, 45);
         medium.Text = "Medium";
         roc.Controls.Add(medium);
+        medium.Click += new EventHandler(mediumfunction);
 
         //Making fast RadioButton
         RadioButton fast = new RadioButton();
         fast.Location = new Point(25, 70);
         fast.Text = "Fast";
         roc.Controls.Add(fast);
+        fast.Click += new EventHandler(fastfunction);
 
         Controls.Add(roc);
 
@@ -125,6 +130,20 @@ public class Program : Form
     {
         seiko.Start();
         seiko.Elapsed += new ElapsedEventHandler(seiko_function);
+    }
+    protected void slowfunction(Object x, EventArgs e)
+    {
+        pace = 2000;
+    }
+
+    protected void mediumfunction(Object x, EventArgs e)
+    {
+        pace = 1000;
+    }
+
+    protected void fastfunction(Object x, EventArgs e)
+    {
+        pace = 500;
     }
     protected void stopFunction(object x, EventArgs e)
     {
